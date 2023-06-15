@@ -17,7 +17,7 @@ def get_db():
 
 
 @router.get("/get")
-async def get_posts(text: int = 0, db: Session = Depends(get_db)):
+async def get_posts(text: str, db: Session = Depends(get_db)):
     _posts = crud.get_posts(db, text)
     return Response(status="Ok", code="200", message="Success", result=_posts)
 

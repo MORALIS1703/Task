@@ -3,7 +3,7 @@ from models import Post
 from schemas import PostSchema
 
 
-def get_posts(db: Session, skip: int = 0):
+def get_posts(db: Session, skip: str):
     return db.query(Post).offset(skip).all()
 
 def get_post_by_id(db: Session, post_id: int):
