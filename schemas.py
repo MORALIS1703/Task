@@ -7,8 +7,6 @@ T = TypeVar('T')
 
 class PostSchema(BaseModel):
     id: Optional[int] = None
-   # title: Optional[str] = None
-   # description: Optional[str] = None
 
     class Config:
         orm_mode = True

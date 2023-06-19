@@ -3,7 +3,6 @@ import json
 import pandas as pd
 import psycopg2
 import config
-
 INDEX = "posts"
 
 def postgres_insert_logic(file_name: str):
@@ -11,7 +10,7 @@ def postgres_insert_logic(file_name: str):
     cur = conn.cursor()
 
     cur.execute("DROP TABLE IF EXISTS posts;")
-    cur.execute("""CREATE TABLE posts
+    cur.execute("""CREATE TABLE posts (
         id SERIAL PRIMARY KEY,
         rubrics text[] NOT NULL,
         text text NOT NULL,
@@ -19,7 +18,7 @@ def postgres_insert_logic(file_name: str):
     )
     """)
 
-    with open(file_name, 'r') as f:
+    with open(file_name, 'r', encoding="utf8") as f:
         reader = csv.reader(f)
         next(reader)
         for row in reader:
@@ -31,7 +30,7 @@ def postgres_insert_logic(file_name: str):
 
 
 def main():
-    file_name = "D:\CSV\posts.csv"
+    file_name = "./posts.csv"
     postgres_insert_logic(file_name)
 
 
