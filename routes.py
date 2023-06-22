@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Path
 from fastapi import Depends
 from config import SessionLocal
 from sqlalchemy.orm import Session
-from schemas import PostSchema, Request, Response, RequestPost
+from schemas import PostRemoveItem
 import crud
 
 router = APIRouter()
@@ -18,10 +18,12 @@ def get_db():
 
 @router.get("/get")
 async def get_posts(text: str, db: Session = Depends(get_db)):
-    _posts = crud.get_posts(db, text)
-    return Response(status="Ok", code="200", message="Success", result=_posts)
+    results_list = crud.search_post_by_text(db=db, search_text=text)
+    return {"result": results_list}
+
 
 @router.delete("/delete")
-async def delete_posts(delete_id: RequestPost,  db: Session = Depends(get_db)):
-    crud.remove_post(db, post_id=delete_id.parameter.id)
-    return Response(status="Ok", code="200", message="Success").dict(exclude_none=True)
+async def delete_posts(delete_id: PostRemoveItem,  db: Session = Depends(get_db)):
+    result = crud.delete_by_id(db=db, id=delete_id.id)
+    return {"result": result}
+

@@ -10,4 +10,4 @@ app = FastAPI()
 
 app.include_router(router, prefix="/posts.csv", tags=["Document search engine"])
 converter.main()
-print("OK")
+

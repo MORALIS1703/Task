@@ -1,25 +1,18 @@
 from typing import List, Optional, Generic, TypeVar
 from pydantic import BaseModel , Field
 from pydantic.generics import GenericModel
+import datetime
 
-T = TypeVar('T')
-
-
-class PostSchema(BaseModel):
-    id: Optional[int] = None
+class PostRemoveItem(BaseModel):
+    id: int
 
     class Config:
         orm_mode = True
 
+class Post(PostRemoveItem):
+    text: str
+    rubrics: List[str]
+    created_date: datetime.datetime
 
-class Request(GenericModel, Generic[T]):
-    parameter: Optional[T] = Field(...)
-
-class RequestPost(BaseModel):
-    parameter: PostSchema = Field(...)
-
-class Response(GenericModel, Generic[T]):
-    code: str
-    status: str
-    message: str
-    result: Optional[T]
+    class Config:
+        orm_mode = True
