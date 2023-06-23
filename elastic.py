@@ -2,11 +2,13 @@ import os
 from typing import List, Union
 import elasticsearch
 from elasticsearch import Elasticsearch
+import config
 
 
 class MyElastic:
+
     def __init__(self, index: str = "posts"):
-        connection_str = os.getenv("http://127.0.0.1:9200", None)
+        connection_str = os.getenv(config.ELASTIC_URL, None)
         self.__connection = Elasticsearch(connection_str)
         self.__index = index
 
@@ -28,7 +30,7 @@ class MyElastic:
         return result
 
     def delete_by_id(self, id: int) -> bool:
-
+     
         try:
             self.__connection.delete(index=self.__index, doc_type="record", id=id)
             return True

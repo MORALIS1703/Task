@@ -17,7 +17,7 @@ def elastic_insert_logic(file_name: str):
     df["id"] = df.index + 1
     print(df)
 
-    e = Elasticsearch("http://127.0.0.1:9200")
+    e = Elasticsearch(config.ELASTIC_URL)
 
     if e.indices.exists(INDEX):
         e.indices.delete(index=INDEX)
